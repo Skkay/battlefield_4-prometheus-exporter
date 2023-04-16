@@ -4,10 +4,12 @@ import datetime
 import requests
 from prometheus_client import start_http_server, Gauge
 
-BATTLELOG_URL = os.environ.get('BATTLELOG_URL')
+BATTLELOG_PLAYER_ID = os.environ.get('BATTLELOG_PLAYER_ID')
 
-if BATTLELOG_URL == None:
-    raise Exception('BATTLELOG_URL is not defined')
+if BATTLELOG_PLAYER_ID == None:
+    raise Exception('BATTLELOG_PLAYER_ID is not defined')
+
+BATTLELOG_GENERAL_STATS_URL = f'https://battlelog.battlefield.com/bf4/warsawdetailedstatspopulate/{BATTLELOG_PLAYER_ID}/1'
 
 generalStats_skill = Gauge('battlefield_4_generalStats_skill', 'Current skill')
 
@@ -67,9 +69,13 @@ def main():
     while True:
         print('[{}] Refreshing metrics...'.format(datetime.datetime.now().isoformat()))
 
-        data = requests.get(BATTLELOG_URL).json()
+        res = requests.get(BATTLELOG_GENERAL_STATS_URL)
+        res.raise_for_status()
+
+        data = res.json()
 
         refresh_metrics(data['data'])
+
         time.sleep(60 * 5)
 
 
