@@ -42,9 +42,9 @@ generalStats_highestKillStreak = Gauge('battlefield_4_generalStats_highestKillSt
 
 generalStats_killAssists = Gauge('battlefield_4_generalStats_killAssists', 'Number of kill assists')
 
-generalStats_numWins = Gauge('battlefield_4_generalStats_numWins', 'Number of rounds won')
-generalStats_numLosses = Gauge('battlefield_4_generalStats_numLosses', 'Number of rounds lost')
-generalStats_numRounds = Gauge('battlefield_4_generalStats_numRounds', 'Numer of rounds played')
+generalStats_wins = Gauge('battlefield_4_generalStats_wins', 'Number of rounds won')
+generalStats_losses = Gauge('battlefield_4_generalStats_losses', 'Number of rounds lost')
+generalStats_rounds = Gauge('battlefield_4_generalStats_rounds', 'Numer of rounds played')
 
 generalStats_shotsFired = Gauge('battlefield_4_generalStats_shotsFired', 'Number of shots fired')
 generalStats_shotsHit = Gauge('battlefield_4_generalStats_shotsHit', 'Number of shots hit')
@@ -105,9 +105,9 @@ def refresh_metrics(data):
     generalStats_longestHeadshot.set(data['generalStats']['longestHeadshot'])
     generalStats_highestKillStreak.set(int(data['generalStats']['killStreakBonus']))
     generalStats_killAssists.set(int(data['generalStats']['killAssists']))
-    generalStats_numWins.set(int(data['generalStats']['numWins']))
-    generalStats_numLosses.set(int(data['generalStats']['numLosses']))
-    generalStats_numRounds.set(int(data['generalStats']['numRounds']))
+    generalStats_wins.set(int(data['generalStats']['numWins']))
+    generalStats_losses.set(int(data['generalStats']['numLosses']))
+    generalStats_rounds.set(int(data['generalStats']['numRounds']))
     generalStats_shotsFired.set(int(data['generalStats']['shotsFired']))
     generalStats_shotsHit.set(int(data['generalStats']['shotsHit']))
     generalStats_repairs.set(int(data['generalStats']['repairs']))
