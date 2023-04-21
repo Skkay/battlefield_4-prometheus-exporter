@@ -1,8 +1,10 @@
 import os
 import time
-import datetime
 import requests
+import logging
 from prometheus_client import start_http_server, Gauge
+
+logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s] %(levelname)s: %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 
 BATTLELOG_PLAYER_ID = os.environ.get('BATTLELOG_PLAYER_ID')
 
@@ -180,7 +182,7 @@ def main():
     start_http_server(8080)
 
     while True:
-        print('[{}] Refreshing metrics...'.format(datetime.datetime.now().isoformat()))
+        logging.info('Refreshing metrics...')
 
         refresh_generalStats_metrics()
         time.sleep(3)
@@ -190,6 +192,8 @@ def main():
 
 
 def refresh_generalStats_metrics():
+    logging.debug('Refreshing generalStats metrics...')
+
     res = requests.get(BATTLELOG_GENERAL_STATS_URL)
     res.raise_for_status()
 
@@ -237,6 +241,8 @@ def refresh_generalStats_metrics():
 
 
 def refresh_vehicleStats_metrics():
+    logging.debug('Refreshing vehicleStats metrics...')
+
     res = requests.get(BATTLELOG_VEHICLE_STATS_URL)
     res.raise_for_status()
 
